@@ -19,4 +19,15 @@ export class ProductsServices{
         const res = await this.productsModel.create(products);
         return res;
     }
+
+    async updateById(id:string,products:Products):Promise<Products>{
+        return await this.productsModel.findByIdAndUpdate(id,products,{
+            new:true,
+            runValidators:true
+        });
+    }
+
+    async deleteById(id: string): Promise<Products> {
+        return await this.productsModel.findByIdAndDelete(id);
+    }
 }
