@@ -3,6 +3,8 @@ import { ProductsServices } from "./product.service";
 import { Products } from "./schema/products.schema";
 import { CreateProductDto } from "./dto/create-product.dto";
 import { UpdateProductDto } from "./dto/update-product.dto";
+// import { CreateProductDto } from "./dto/create-product.dto";
+// import { UpdateProductDto } from "./dto/update-product.dto";
 
 @Controller()
 export class ProductsController {
@@ -14,25 +16,25 @@ export class ProductsController {
     }
 
     @Post()
-    async createProduct(
-        @Body() createProductDto: CreateProductDto): Promise<CreateProductDto> {
+    async create(@Body() createProductDto:CreateProductDto):Promise<string>{
         return this.productsService.create(createProductDto);
     }
 
-    @Put(':id')
-    async updateProducts(
-        @Param('id')
-        id: string,
-        @Body()
-        updateProductsDto: UpdateProductDto,): Promise<UpdateProductDto> {
-        return this.productsService.updateById(id, updateProductsDto);
+    @Put(":id")
+    async update(@Param('id') id:string, @Body() updateProductDto:UpdateProductDto):Promise<string>{
+    return await this.productsService.update(id,updateProductDto);
+    }
+
+    @Delete(":id")
+    async delete(@Param("id") id:string){
+        return await this.productsService.delete(id);
     }
 
 
-    @Delete(':id')
-    async deleteProducts(
-        @Param('id') id: string
-    ): Promise<Products> {
-        return this.productsService.deleteById(id);
-    }
+    // @Delete(':id')
+    // async deleteProducts(
+    //     @Param('id') id: string
+    // ): Promise<Products> {
+    //     return this.productsService.deleteById(id);
+    // }
 }

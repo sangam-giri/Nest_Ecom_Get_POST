@@ -4,6 +4,8 @@ import { Products } from "./schema/products.schema";
 import * as mongoose from "mongoose";
 import { CreateProductDto } from "./dto/create-product.dto";
 import { UpdateProductDto } from "./dto/update-product.dto";
+// import { CreateProductDto } from "./dto/create-product.dto";
+// import { UpdateProductDto } from "./dto/update-product.dto";
 
 @Injectable()
 export class ProductsServices {
@@ -17,19 +19,22 @@ export class ProductsServices {
         return products;
     }
 
-    async create(createProductsDto: CreateProductDto): Promise<CreateProductDto> {
-        const res = await this.productsModel.create(createProductsDto);
-        return res;
+    async create(createProductDto:CreateProductDto):Promise<string>{
+        await this.productsModel.create(createProductDto);
+        return "Successfully Created";
     }
 
-    async updateById(id: string, updateProductsDto: UpdateProductDto): Promise<UpdateProductDto> {
-        return await this.productsModel.findByIdAndUpdate(id, updateProductsDto, {
-            new: true,
-            runValidators: true
+    async update(id:string,updateProductDto:UpdateProductDto):Promise<string>{
+        await this.productsModel.findByIdAndUpdate(id,updateProductDto,{
+            new:true,
+            runValidators:true
         });
+        return "Successfully Updated";
     }
 
-    async deleteById(id: string): Promise<Products> {
-        return await this.productsModel.findByIdAndDelete(id);
+    async delete(id:string):Promise<string>{
+        await this.productsModel.findByIdAndDelete(id);
+        return "Successfully Deleted";
     }
+
 }
